@@ -1,11 +1,13 @@
 package com.example.Nolowa.dataModels;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 import org.springframework.data.annotation.Id;
 
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import java.util.Date;
+import java.util.List;
 
 @Data
 @AllArgsConstructor
@@ -15,10 +17,15 @@ import java.util.Date;
 public class User {
 
     @Id
+    @JsonIgnore
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
-    private String email;
+    @JsonIgnore
     private String password;
+    @JsonIgnore
     private Date joinDate;
+
+    private List<Long> followIds;
+    private String email;
+    private byte[] profileImage;
 }
