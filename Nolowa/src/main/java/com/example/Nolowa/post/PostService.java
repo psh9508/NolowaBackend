@@ -1,0 +1,51 @@
+package com.example.Nolowa.post;
+
+import com.example.Nolowa.dataModels.Post;
+import com.example.Nolowa.dataModels.User;
+import org.springframework.stereotype.Service;
+
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
+import java.util.stream.Collectors;
+
+@Service
+public class PostService {
+
+    private static List<Post> posts = new ArrayList<>();
+
+    static {
+        posts.add(new Post(1L, "안녕하세요 팬여러분들!! 방탄소년단의 팬앤스타 초이스 상 수상을 위해 여러분의 도움이 필요합니다."));
+        posts.add(new Post(1L, "[에릭]"));
+        posts.add(new Post(1L, "NCT 127 美 '제임스 코든쇼' 출연 화제! 신곡 'Sticker' 무대 최초 공개, 글로벌 팬열광!"));
+        posts.add(new Post(2L, "테스트 스트링입니다."));
+        posts.add(new Post(2L, "We ard too far away with our 50K gap goal."));
+        posts.add(new Post(3L, "Stream의 요소들이 특정한 조건을 충족하는지 검사하고 싶은 경우에는 match 함수를 이용할 수 있다."));
+        posts.add(new Post(3L, "예를 들어 요소들을 출력하기를 원할 때 다."));
+        posts.add(new Post(4L, "redicate를 받아 Boolean을 Key값으로 partitioning한다"));
+        posts.add(new Post(5L, "하지만 만약 1개의 Stream으로부터 갯수, 합계, 평균, 최댓값, 최솟값을 한번에 얻고 싶은 경우에는 어떻게 할 수 있을까?"));
+        posts.add(new Post(6L, "Stream에서 작업한 결과를 1개의 String으로 이어붙이기를 원하는 경우에 Collectors.joining()을 이용할 수 있다"));
+    }
+
+    public List<Post> getFollowerPosts(User user) {
+        return getFollowerPosts(user.getFollowIds());
+    }
+
+    private List<Post> getFollowerPosts(List<Long> followerIds) {
+
+        var followerPosts = new ArrayList<Post>();
+
+        for (var follower : followerIds) {
+
+            var followerPost = posts.stream().filter(x -> x.getId().equals(follower)).collect(Collectors.toList());
+
+            if(followerPost.size() >= 1) {
+                followerPosts.addAll(followerPost);
+            }
+        }
+
+        return followerPosts;
+    }
+
+}
+
