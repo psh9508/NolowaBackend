@@ -27,5 +27,5 @@ public class User {
 
     private List<Long> followIds;
     private String email;
-    private byte[] profileImage;
+    private ProfileImage profileImage;
 }
