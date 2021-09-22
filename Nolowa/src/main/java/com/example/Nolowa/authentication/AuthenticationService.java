@@ -17,6 +17,7 @@ import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class AuthenticationService {
@@ -25,11 +26,11 @@ public class AuthenticationService {
     private static List<ProfileImage> profileImages = new ArrayList<>();
 
     static {
-        users.add(new User(1L, "ab", new Date(), List.of(1L, 2L), "psh0258@gmail.com", null));
+        users.add(new User(1L, "ab", new Date(), List.of(1L, 2L, 3L, 4L, 5L, 6L), "psh0258@gmail.com", null));
         users.add(new User(2L, "ab", new Date(), List.of(1L, 2L), "Masuri@naver.com", null));
         users.add(new User(3L, "ab", new Date(), List.of(1L, 2L),"Alice@gmail.com", null));
         users.add(new User(4L, "ab", new Date(), List.of(1L, 2L), "Elena@gmail.com", null));
-        users.add(new User(5L, "a", new Date(), List.of(1L, 2L, 3L, 4L, 5L, 6L),"aa", null));
+        users.add(new User(5L, "a", new Date(), List.of(1L, 2L),"aa", null));
 
         profileImages.add(new ProfileImage(1L, 1L, "asdf","asdf"));
         profileImages.add(new ProfileImage(1L, 2L, "1111","111asdf"));
@@ -52,14 +53,14 @@ public class AuthenticationService {
         var user = users.stream().filter(x -> x.getEmail().equals(email) & x.getPassword().equals(password))
                                                .findFirst();
 
-        return user.orElseGet(null);
+        return user.orElse(null);
     }
 
     private ProfileImage getProfileImage(Long id) {
 
         var profileImage = profileImages.stream().filter(x -> x.getId() == id).findFirst();
 
-        return profileImage.orElseGet(null);
+        return profileImage.orElse(null);
     }
 
 }
