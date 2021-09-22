@@ -17,8 +17,6 @@ import java.util.List;
 public class User {
 
     @Id
-    @JsonIgnore
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @JsonIgnore
     private String password;
