@@ -15,6 +15,10 @@ public class Post {
     @Id
     private Long id;
 
+    private String name;
+
+    private String userId;
+
     private String message;
 
     private LocalDateTime uploadedDate;
