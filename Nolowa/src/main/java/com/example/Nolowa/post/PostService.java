@@ -11,6 +11,7 @@ import java.util.stream.Collectors;
 @Service
 public class PostService {
 
+    private final PostRepository repository;
     private static List<Post> posts = new ArrayList<>();
 
     static {
@@ -26,6 +27,10 @@ public class PostService {
         posts.add(new Post(6L, "ninn211", "@best_programmer", "Stream에서 작업한 결과를 1개의 String으로 이어붙이기를 원하는 경우에 Collectors.joining()을 이용할 수 있다", LocalDateTime.of(2021, 8, 11, 15, 23, 55)));
     }
 
+    public PostService(PostRepository repository) {
+        this.repository = repository;
+    }
+
     public List<Post> getFollowerPosts(User user) {
         return getFollowerPosts(new ArrayList<>(1)); // TEST
         //return getFollowerPosts(user.getFollowIds());
@@ -37,8 +42,9 @@ public class PostService {
 
         for (var follower : followerIds) {
 
-            var followerPost = posts.stream().filter(x -> x.getId().equals(follower))
-                                                       .collect(Collectors.toList());
+//            var followerPost = posts.stream().filter(x -> x.getId().equals(follower))
+//                                                       .collect(Collectors.toList());
+            var followerPost = repository.findAllById(followerIds);
 
             if(followerPost.size() > 0) {
                 followerPosts.addAll(followerPost);
