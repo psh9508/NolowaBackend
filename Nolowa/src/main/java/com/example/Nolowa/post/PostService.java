@@ -27,7 +27,8 @@ public class PostService {
     }
 
     public List<Post> getFollowerPosts(User user) {
-        return getFollowerPosts(user.getFollowIds());
+        return getFollowerPosts(new ArrayList<>(1)); // TEST
+        //return getFollowerPosts(user.getFollowIds());
     }
 
     private List<Post> getFollowerPosts(List<Long> followerIds) {

@@ -8,23 +8,22 @@ import org.springframework.web.bind.annotation.*;
 import java.util.Map;
 
 @RestController
+@RequestMapping("/Authentication")
 public class AuthenticationController {
 
-    private final String parentEndPoint = "/Authentication";
     private final AuthenticationService service;
 
     public AuthenticationController(AuthenticationService service) {
         this.service = service;
     }
 
-    @GetMapping(parentEndPoint + "/VerifyService")
+    @GetMapping("/VerifyService")
     public boolean VerifyService() {
         return true;
     }
 
-    @PostMapping(parentEndPoint + "/Login")
+    @PostMapping("/Login")
     public User Login(@NotNull @RequestBody Map<String, String> param) {
-
         String id = param.get("id");
         String Password = param.get("password");
 
