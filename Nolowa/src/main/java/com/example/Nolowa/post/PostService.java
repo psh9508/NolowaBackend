@@ -37,13 +37,9 @@ public class PostService {
     }
 
     private List<Post> getFollowerPosts(List<Long> followerIds) {
-
         var followerPosts = new ArrayList<Post>();
 
         for (var follower : followerIds) {
-
-//            var followerPost = posts.stream().filter(x -> x.getId().equals(follower))
-//                                                       .collect(Collectors.toList());
             var followerPost = repository.findAllById(followerIds);
 
             if(followerPost.size() > 0) {
