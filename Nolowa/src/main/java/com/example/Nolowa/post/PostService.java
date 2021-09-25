@@ -31,8 +31,10 @@ public class PostService {
     private List<Post> getFollowerPosts(List<Long> followerIds) {
         var followerPosts = new ArrayList<Post>();
 
-        var followerPost = repository.findAllById(followerIds);
-        followerPosts.addAll(followerPost);
+        for (var followerId : followerIds) {
+            var followerPost = repository.findAllByUserId(followerId);
+            followerPosts.addAll(followerPost);
+        }
 
         followerPosts.sort(Comparator.comparing(Post::getUploadedDate));
 
