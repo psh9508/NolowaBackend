@@ -1,7 +1,10 @@
 package com.example.Nolowa.dataModels;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 
 @Data
@@ -9,10 +12,13 @@ import javax.persistence.Id;
 @AllArgsConstructor
 @Setter
 @Getter
+@Entity
 public class Follower {
-    @Id
+    @Id @GeneratedValue
+    @JsonIgnore
     private Long id;
 
+    @JsonIgnore
     private Long userId;
 
     private Long followId;

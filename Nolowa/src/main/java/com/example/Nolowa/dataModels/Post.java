@@ -1,8 +1,11 @@
 package com.example.Nolowa.dataModels;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
-import org.springframework.data.annotation.Id;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
 import java.time.LocalDateTime;
 
 @Data
@@ -10,14 +13,18 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @Getter
 @Setter
+@Entity
 public class Post {
 
-    @Id
-    private Long id;
+    @Id @GeneratedValue
+    @JsonIgnore
+    private Long postId;
 
     private String name;
 
-    private String userId;
+    private String userAccountId;
+
+    private Long userId;
 
     private String message;
 

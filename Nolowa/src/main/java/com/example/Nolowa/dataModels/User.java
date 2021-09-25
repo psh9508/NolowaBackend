@@ -24,7 +24,9 @@ public class User {
     @JsonIgnore
     private LocalDateTime  joinDate;
 
-    //private List<Long> followIds;
+    @OneToMany
+    @JoinColumn(name = "userId")
+    private List<Follower> follows;
     private String email;
     //private ProfileImage profileImage;
 }
