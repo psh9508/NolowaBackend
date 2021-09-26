@@ -1,5 +1,6 @@
 package com.example.Nolowa.dataModels;
 
+import com.example.Nolowa.dataModels.Images.ProfileImage;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 
@@ -28,5 +29,7 @@ public class User {
     @JoinColumn(name = "userId")
     private List<Follower> follows;
     private String email;
-    //private ProfileImage profileImage;
+    @OneToOne
+    @JoinColumn(name = "id", referencedColumnName = "userId")
+    private ProfileImage profileImage;
 }
