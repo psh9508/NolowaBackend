@@ -1,12 +1,20 @@
 package com.example.Nolowa.dataModels.Images;
 
 import com.example.Nolowa.dataModels.NolowaImage;
+import com.example.Nolowa.dataModels.User;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import lombok.*;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 @Entity
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+@Setter
+@Getter
 public class ProfileImage extends NolowaImage {
-    @Id
+    @Id @GeneratedValue
+    @JsonIgnore
     private Long id;
 }

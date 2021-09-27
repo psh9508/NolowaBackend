@@ -6,7 +6,6 @@ import lombok.*;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
-import java.util.Date;
 import java.util.List;
 
 @Data
@@ -23,13 +22,13 @@ public class User {
     @JsonIgnore
     private String password;
     @JsonIgnore
-    private LocalDateTime  joinDate;
+    private LocalDateTime joinDate;
 
     @OneToMany
     @JoinColumn(name = "userId")
-    private List<Follower> follows;
+    private List<Follower> followers;
     private String email;
     @OneToOne
-    @JoinColumn(name = "id", referencedColumnName = "userId")
+    @JoinColumn(name = "id")
     private ProfileImage profileImage;
 }

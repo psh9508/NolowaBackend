@@ -8,6 +8,8 @@ insert into user values(5, 'aa', sysdate(), 'a');
 insert into follower values(1L, 1L, 5L);
 insert into follower values(2L, 2L, 5L);
 insert into follower values(3L, 3L, 5L);
+--insert into follower values(4L, 3L, 1L);
+--insert into follower values(5L, 3L, 2L);
 
 
 insert into post values(1L, '안녕하세요 팬여러분들!! 방탄소년단의 팬앤스타 초이스 상 수상을 위해 여러분의 도움이 필요합니다.', '병아리감별사', sysdate(), '@_golden_gate_', 1L);
@@ -22,7 +24,11 @@ insert into post values(9L, '하지만 만약 1개의 Stream으로부터 갯수,
 insert into post values(10L, 'Stream에서 작업한 결과를 1개의 String으로 이어붙이기를 원하는 경우에 Collectors.joining()을 이용할 수 있다', 'ninn211', sysdate(), '@best_programmer', 6L);
 
 
-insert into profile_Image values(1L, '844b2e56483db6f6f75611e891a84e9c38c727d02655f3d211a837f0aadfa31c', 'C:\\Users\\psh02\\OneDrive\\사진\\Nolowa\\ProfileImages\\1.jpg', 5L);
+--insert into profile_Image values(1L, '844b2e56483db6f6f75611e891a84e9c38c727d02655f3d211a837f0aadfa31c', 'C:\\Users\\psh02\\OneDrive\\사진\\Nolowa\\ProfileImages\\1.jpg', 1L);
+--insert into profile_Image values(2L, '844b2e56483db6f6f75611e891a84e9c38c727d02655f3d211a837f0aadfa31c', 'C:\\Users\\psh02\\OneDrive\\사진\\Nolowa\\ProfileImages\\1.jpg', 2L);
+--insert into profile_Image values(3L, '844b2e56483db6f6f75611e891a84e9c38c727d02655f3d211a837f0aadfa31c', 'C:\\Users\\psh02\\OneDrive\\사진\\Nolowa\\ProfileImages\\1.jpg', 3L);
+--insert into profile_Image values(4L, '844b2e56483db6f6f75611e891a84e9c38c727d02655f3d211a837f0aadfa31c', 'C:\\Users\\psh02\\OneDrive\\사진\\Nolowa\\ProfileImages\\1.jpg', 4L);
+insert into profile_image values(5L, '844b2e56483db6f6f75611e891a84e9c38c727d02655f3d211a837f0aadfa31c', 'C:\\Users\\psh02\\OneDrive\\사진\\Nolowa\\ProfileImages\\1.jpg');
 
 
 
