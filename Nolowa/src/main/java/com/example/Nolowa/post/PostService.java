@@ -1,13 +1,10 @@
 package com.example.Nolowa.post;
 
-import com.example.Nolowa.dataModels.Follower;
 import com.example.Nolowa.dataModels.Post;
 import com.example.Nolowa.dataModels.User;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDateTime;
 import java.util.*;
-import java.util.stream.Collectors;
 
 @Service
 public class PostService {
@@ -21,8 +18,8 @@ public class PostService {
     public List<Post> getFollowerPosts(User user) {
         var followerIds = new ArrayList<Long>();
 
-        for (var follower : user.getFollows()) {
-            followerIds.add(follower.getFollowId());
+        for (var follower : user.getFollowers()) {
+            followerIds.add(follower.getFollowerId());
         }
 
         return getFollowerPosts(followerIds);

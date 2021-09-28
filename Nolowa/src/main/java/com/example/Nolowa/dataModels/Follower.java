@@ -21,5 +21,5 @@ public class Follower {
     @JsonIgnore
     private Long userId;
 
-    private Long followId;
+    private Long followerId;
 }
