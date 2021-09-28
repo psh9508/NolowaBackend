@@ -1,24 +1,15 @@
 package com.example.Nolowa.authentication;
 
-import com.example.Nolowa.dataModels.ProfileImage;
+import com.example.Nolowa.Constant;
+import com.example.Nolowa.Helpers.FileHelper;
+import com.example.Nolowa.Helpers.LocalImageFileHelper;
 import com.example.Nolowa.dataModels.User;
-import com.sun.tools.javac.Main;
-import org.springframework.boot.autoconfigure.neo4j.Neo4jProperties;
-import org.springframework.core.io.ClassPathResource;
 import org.springframework.stereotype.Service;
 
-import javax.imageio.ImageIO;
-import java.awt.image.BufferedImage;
-import java.io.ByteArrayOutputStream;
-import java.io.FileInputStream;
 import java.io.File;
 import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Paths;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.Optional;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 
 @Service
 public class AuthenticationService {
@@ -35,9 +26,28 @@ public class AuthenticationService {
         return user;
     }
 
-    public User login(String email, String password) {
+    public User login(String email, String password) throws IOException {
         var user = repository.findByEmailAndPassword(email, password);
 
-        return user.orElse(null);
+        if(user.isPresent() == false) {
+            return null;
+        }
+
+        var profileImageInfo = user.get().getProfileImage();
+        var profileImageHash = profileImageInfo.getHash();
+        var profileImageFile = LocalImageFileHelper.getProfileImageFile(profileImageHash);
+
+        if(profileImageFile.exists() == false) {
+            var fileDownloadResult = FileHelper.downloadFileFromURL(Constant.profileImageRootPath + profileImageHash + ".jpg", profileImageInfo.getUrl());
+
+            if(fileDownloadResult) {
+              // Log
+            } else {
+              // Log
+              // When It's failed, show default profile image
+            }
+        }
+
+        return user.get();
     }
 }

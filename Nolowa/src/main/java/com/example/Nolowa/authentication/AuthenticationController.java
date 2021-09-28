@@ -1,7 +1,6 @@
 package com.example.Nolowa.authentication;
 
 import com.example.Nolowa.dataModels.User;
-import com.fasterxml.jackson.databind.util.ClassUtil;
 import com.sun.istack.NotNull;
 import org.springframework.web.bind.annotation.*;
 
@@ -23,7 +22,7 @@ public class AuthenticationController {
     }
 
     @PostMapping("/Login")
-    public User Login(@NotNull @RequestBody Map<String, String> param) {
+    public User Login(@NotNull @RequestBody Map<String, String> param) throws Exception {
         String id = param.get("id");
         String Password = param.get("password");
 
