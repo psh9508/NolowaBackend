@@ -1,11 +1,10 @@
 package com.example.Nolowa.dataModels;
 
+import com.example.Nolowa.dataModels.Images.ProfileImage;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.time.LocalDateTime;
 
 @Data
@@ -24,7 +23,9 @@ public class Post {
 
     private String userAccountId;
 
-    private Long userId;
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private User postedUser;
 
     private String message;
 
