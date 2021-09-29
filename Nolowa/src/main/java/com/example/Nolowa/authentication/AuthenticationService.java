@@ -10,6 +10,7 @@ import java.io.File;
 import java.io.IOException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.util.Optional;
 
 @Service
 public class AuthenticationService {
@@ -26,28 +27,9 @@ public class AuthenticationService {
         return user;
     }
 
-    public User login(String email, String password) throws IOException {
+    public User login(String email, String password) {
         var user = repository.findByEmailAndPassword(email, password);
 
-        if(user.isPresent() == false) {
-            return null;
-        }
-
-        var profileImageInfo = user.get().getProfileImage();
-        var profileImageHash = profileImageInfo.getHash();
-        var profileImageFile = LocalImageFileHelper.getProfileImageFile(profileImageHash);
-
-        if(profileImageFile.exists() == false) {
-            var fileDownloadResult = FileHelper.downloadFileFromURL(Constant.profileImageRootPath + profileImageHash + ".jpg", profileImageInfo.getUrl());
-
-            if(fileDownloadResult) {
-              // Log
-            } else {
-              // Log
-              // When It's failed, show default profile image
-            }
-        }
-
-        return user.get();
+        return user.orElse(null);
     }
 }
