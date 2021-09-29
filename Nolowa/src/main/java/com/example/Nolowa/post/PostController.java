@@ -27,7 +27,7 @@ public class PostController {
     }
 
     @GetMapping("/{id}/Followers")
-    public List<Post> getFollwerPosts(@PathVariable Long id) {
+    public List<Post> getFollowerPosts(@PathVariable Long id) {
         var user = authenticationService.getUser(id);
         return postService.getFollowerPosts(user);
     }
