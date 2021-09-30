@@ -2,6 +2,7 @@ package com.example.Nolowa.post;
 
 import com.example.Nolowa.dataModels.Post;
 import com.example.Nolowa.dataModels.User;
+import org.jetbrains.annotations.NotNull;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
@@ -15,24 +16,18 @@ public class PostService {
         this.repository = repository;
     }
 
-    public List<Post> getFollowerPosts(User user) {
+    public List<Post> getFollowerPosts(@NotNull User user) {
         var followerIds = new ArrayList<Long>();
 
         for (var follower : user.getFollowers()) {
-            followerIds.add(follower.getFollowerId());
+            followerIds.add(follower.getFollowerUser().getId());
         }
-
+        
         return getFollowerPosts(followerIds);
     }
 
     private List<Post> getFollowerPosts(List<Long> followerIds) {
-        var followerPosts = new ArrayList<Post>();
-
-        for (var followerId : followerIds) {
-            var followerPost = repository.findAllByUserId(followerId);
-            followerPosts.addAll(followerPost);
-        }
-
+        var followerPosts = repository.findAllByPostedUserIds(followerIds);
         followerPosts.sort(Comparator.comparing(Post::getUploadedDate));
 
         return followerPosts;

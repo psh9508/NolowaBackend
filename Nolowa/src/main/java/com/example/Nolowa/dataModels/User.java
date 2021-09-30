@@ -2,6 +2,7 @@ package com.example.Nolowa.dataModels;
 
 import com.example.Nolowa.dataModels.Images.ProfileImage;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.*;
 import org.springframework.data.jpa.repository.Query;
 
@@ -9,7 +10,6 @@ import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.List;
 
-@Data
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
@@ -26,7 +26,7 @@ public class User {
     private LocalDateTime joinDate;
 
     @OneToMany
-    @JoinColumn(name = "follow_user_Id")
+    @JoinColumn(name = "source_user_id")
     private List<Follower> followers;
     private String email;
     @OneToOne

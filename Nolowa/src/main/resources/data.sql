@@ -7,6 +7,11 @@ insert into user values(3, 'Elena@gmail.com', sysdate(), 'a', null);
 insert into user values(4, 'Masuri@naver.com', sysdate(), 'a', null);
 insert into user values(5L, 'aa', sysdate(), 'a', 5L);
 
+insert into follower values(1L, 2L, 1L);
+insert into follower values(2L, 1L, 5L);
+insert into follower values(3L, 2L, 5L);
+insert into follower values(4L, 3L, 5L);
+
 insert into post values(1L, '안녕하세요 팬여러분들!! 방탄소년단의 팬앤스타 초이스 상 수상을 위해 여러분의 도움이 필요합니다.', '병아리감별사', sysdate(), '@_golden_gate_', 1L);
 insert into post values(2L, '[에릭]', '병아리감별사', sysdate(), '@_golden_gate_', 1L);
 insert into post values(3L, 'NCT 127 美 ''제임스 코든쇼'' 출연 화제! 신곡 ''Sticker'' 무대 최초 공개, 글로벌 팬열광!', '병아리감별사', sysdate(), '@_golden_gate_', 1L);

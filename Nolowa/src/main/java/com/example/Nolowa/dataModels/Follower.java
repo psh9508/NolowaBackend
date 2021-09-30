@@ -1,13 +1,12 @@
 package com.example.Nolowa.dataModels;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.*;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
 
-@Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Setter
@@ -18,8 +17,13 @@ public class Follower {
     @JsonIgnore
     private Long id;
 
+    @ManyToOne
+    @JoinColumn(name = "source_user_id")
     @JsonIgnore
-    private Long userId;
+    private User user;
 
-    private Long followerId;
+    @ManyToOne
+    @JoinColumn(name = "destination_user_id")
+    @JsonIgnoreProperties({"followers"})
+    private User followerUser;
 }
