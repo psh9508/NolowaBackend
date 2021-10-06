@@ -19,6 +19,8 @@ public class PostService {
     public List<Post> getFollowerPosts(@NotNull User user) {
         var followerIds = new ArrayList<Long>();
 
+//        followerIds.add(user.getId());
+
         for (var follower : user.getFollowers()) {
             followerIds.add(follower.getFollowerUser().getId());
         }
