@@ -2,10 +2,7 @@ package com.example.Nolowa.post;
 
 import com.example.Nolowa.authentication.AuthenticationService;
 import com.example.Nolowa.dataModels.Post;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -30,5 +27,12 @@ public class PostController {
     public List<Post> getFollowerPosts(@PathVariable Long id) {
         var user = authenticationService.getUser(id);
         return postService.getFollowerPosts(user);
+    }
+
+    @PostMapping("/New")
+    public Post save(@RequestBody Post post) {
+        var uploadedPost = postService.save(post);
+
+        return uploadedPost;
     }
 }

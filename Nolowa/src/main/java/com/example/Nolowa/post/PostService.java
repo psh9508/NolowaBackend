@@ -28,12 +28,15 @@ public class PostService {
         return getFollowerPosts(followerIds);
     }
 
+    public Post save(Post post) {
+        return repository.save(post);
+    }
+
     private List<Post> getFollowerPosts(List<Long> followerIds) {
         var followerPosts = repository.findAllByPostedUserIds(followerIds);
         followerPosts.sort(Comparator.comparing(Post::getUploadedDate));
 
         return followerPosts;
     }
-
 }
 
