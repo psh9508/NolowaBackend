@@ -19,7 +19,7 @@ public class PostService {
     public List<Post> getFollowerPosts(@NotNull User user) {
         var followerIds = new ArrayList<Long>();
 
-//        followerIds.add(user.getId());
+        followerIds.add(user.getId());
 
         for (var follower : user.getFollowers()) {
             followerIds.add(follower.getFollowerUser().getId());
@@ -28,13 +28,19 @@ public class PostService {
         return getFollowerPosts(followerIds);
     }
 
+    public List<Post> getPostByPostedUserId(Long postedUserId) {
+        var posts = repository.findAllByPostedUserId(postedUserId);
+
+        return posts;
+    }
+
     public Post save(Post post) {
         return repository.save(post);
     }
 
     private List<Post> getFollowerPosts(List<Long> followerIds) {
         var followerPosts = repository.findAllByPostedUserIds(followerIds);
-        followerPosts.sort(Comparator.comparing(Post::getUploadedDate));
+        followerPosts.sort(Comparator.comparing(Post::getUploadedDateTime, Comparator.reverseOrder()));
 
         return followerPosts;
     }

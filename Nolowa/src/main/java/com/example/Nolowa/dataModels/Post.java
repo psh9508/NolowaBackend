@@ -7,28 +7,20 @@ import lombok.*;
 import javax.persistence.*;
 import java.time.LocalDateTime;
 
-@Data
-@AllArgsConstructor
-@NoArgsConstructor
-@Getter
-@Setter
 @Entity
+@Getter
 public class Post {
 
     @Id @GeneratedValue
     @JsonIgnore
     private Long postId;
 
-    private String name;
-
-    private String userAccountId;
-
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
     private User postedUser;
 
     private String message;
 
-    private LocalDateTime uploadedDate;
+    private LocalDateTime uploadedDateTime;
 }
 

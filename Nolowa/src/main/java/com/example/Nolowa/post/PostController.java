@@ -29,10 +29,16 @@ public class PostController {
         return postService.getFollowerPosts(user);
     }
 
+    @GetMapping("/{id}/Posts")
+    public List<Post> getPosts(@PathVariable Long id) {
+        return postService.getPostByPostedUserId(id);
+    }
+
     @PostMapping("/New")
     public Post save(@RequestBody Post post) {
         var uploadedPost = postService.save(post);
 
         return uploadedPost;
     }
+
 }
