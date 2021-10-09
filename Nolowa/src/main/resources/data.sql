@@ -18,8 +18,8 @@ insert into follower values(5L, 4L, 5L);
 
 insert into post values(1L, '안녕하세요 팬여러분들!! 방탄소년단의 팬앤스타 초이스 상 수상을 위해 여러분의 도움이 필요합니다.', sysdate(), 1L);
 insert into post values(2L, '[에릭]', '2019-10-04', 1L);
-insert into post values(3L, 'NCT 127 美 ''제임스 코든쇼'' 출연 화제! 신곡 ''Sticker'' 무대 최초 공개, 글로벌 팬열광!', '2020-02-01', 1L);
-insert into post values(4L, '테스트 스트링입니다.', '2020-01-01', 2L);
+insert into post values(3L, 'NCT 127 美 ''제임스 코든쇼'' 출연 화제! 신곡 ''Sticker'' 무대 최초 공개, 글로벌 팬열광!', '2020-02-01 13:00:00', 1L);
+insert into post values(4L, '테스트 스트링입니다.', '2020-02-01 13:01:00', 2L);
 insert into post values(5L, 'We ard too far away with our 50K gap goal.', sysdate(), 2L);
 insert into post values(6L, 'Stream의 요소들이 특정한 조건을 충족하는지 검사하고 싶은 경우에는 match 함수를 이용할 수 있다.', sysdate(), 3L);
 insert into post values(7L, '예를 들어 요소들을 출력하기를 원할 때 다.', sysdate(), 3L);
