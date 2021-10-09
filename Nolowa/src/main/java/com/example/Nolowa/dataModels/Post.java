@@ -3,12 +3,15 @@ package com.example.Nolowa.dataModels;
 import com.example.Nolowa.dataModels.Images.ProfileImage;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
 
 @Entity
 @Getter
+@EntityListeners(AuditingEntityListener.class)
 public class Post {
 
     @Id @GeneratedValue
@@ -21,6 +24,7 @@ public class Post {
 
     private String message;
 
+    @CreatedDate
     private LocalDateTime uploadedDateTime;
 }
 
