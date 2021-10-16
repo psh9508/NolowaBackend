@@ -37,4 +37,7 @@ public class User {
     private String name;
 
     private String accountId;
+
+    @Transient
+    private String jwtToken;
 }

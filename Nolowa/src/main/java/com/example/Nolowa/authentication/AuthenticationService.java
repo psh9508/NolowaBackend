@@ -4,6 +4,7 @@ import com.example.Nolowa.Constant;
 import com.example.Nolowa.Helpers.FileHelper;
 import com.example.Nolowa.Helpers.LocalImageFileHelper;
 import com.example.Nolowa.dataModels.User;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.io.File;
@@ -30,6 +31,6 @@ public class AuthenticationService {
     public User login(String email, String password) {
         var user = repository.findByEmailAndPassword(email, password);
 
-        return user.orElse(null);
+        return user.orElseThrow(() -> new UsernameNotFoundException(email));
     }
 }

@@ -36,7 +36,7 @@ public class Account implements UserDetails {
     }
 
     @Override
-    public String getUsername() { return id.toString(); }
+    public String getUsername() { return email; }
 
     @Override
     public boolean isAccountNonExpired() {
