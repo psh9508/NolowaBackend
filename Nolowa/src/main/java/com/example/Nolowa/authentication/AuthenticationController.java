@@ -1,13 +1,24 @@
 package com.example.Nolowa.authentication;
 
+import com.example.Nolowa.account.AccountService;
 import com.example.Nolowa.dataModels.User;
+import com.example.Nolowa.dataModels.oauth.google.OAuthGoogleRequest;
+import com.example.Nolowa.dataModels.oauth.google.OAuthGoogleResponse;
+import com.example.Nolowa.jwt.JwtTokenProvider;
 import com.sun.istack.NotNull;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.core.env.Environment;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.web.context.HttpSessionSecurityContextRepository;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.client.AsyncRestTemplate;
+import org.springframework.web.client.RestTemplate;
+import org.springframework.web.reactive.function.client.WebClient;
 
 import javax.servlet.http.HttpSession;
 import java.util.Map;
@@ -16,12 +27,12 @@ import java.util.Map;
 @RequestMapping("/Authentication")
 public class AuthenticationController {
 
-    private final AuthenticationManager authenticationManager;
-    private final AuthenticationService service;
+    private final AuthenticationService authenticationService;
+    private final JwtTokenProvider jwtTokenProvider;
 
-    public AuthenticationController(AuthenticationManager authenticationManager, AuthenticationService service) {
-        this.authenticationManager = authenticationManager;
-        this.service = service;
+    public AuthenticationController(AuthenticationService authenticationService, JwtTokenProvider jwtTokenProvider) {
+        this.authenticationService = authenticationService;
+        this.jwtTokenProvider = jwtTokenProvider;
     }
 
     @GetMapping("/VerifyService")
@@ -29,23 +40,25 @@ public class AuthenticationController {
         return true;
     }
 
+    @GetMapping("/GetSubject")
+    public String GetSubjectFromJWT(@RequestParam("token") String token) {
+        var subject = jwtTokenProvider.extractUsername(token);
+
+        return subject;
+    }
+
     @PostMapping("/Login")
-    public User Login(@NotNull @RequestBody Map<String, String> param, HttpSession session) throws Exception {
+    public User Login(@NotNull @RequestBody Map<String, String> param) throws Exception {
         String id = param.get("id");
         String password = param.get("password");
 
-        SetToken(id, password, session);
+        var account = authenticationService.login(id, password);
 
-        return service.login(id, password);
+        if(account == null)
+            return null;
+
+        account.setJwtToken(jwtTokenProvider.generateToken(account.getEmail()));
+        
+        return account;
     }
-
-    private void SetToken(String id, String Password, HttpSession session) {
-        var token = new UsernamePasswordAuthenticationToken(id, Password);
-        var authentication = authenticationManager.authenticate(token);
-
-        SecurityContextHolder.getContext().setAuthentication(authentication);
-        session.setAttribute(HttpSessionSecurityContextRepository.SPRING_SECURITY_CONTEXT_KEY, SecurityContextHolder.getContext());
-    }
-
-
 }
