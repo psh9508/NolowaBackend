@@ -31,7 +31,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
                 .authorizeRequests()
                 .antMatchers("/Authentication/Login", "/Authentication/GenerateJWTToken"
-                            ,"/Authentication/GetSubject", "/Authentication/Login/Google/", "/Authentication/Login/GoogleCode"
+                            ,"/Authentication/GetSubject", "/Authentication/Login/Google/"
+                            ,"/Authentication/Social/Google/Callback"
                             , "/h2-console/**").permitAll()
                 .anyRequest().authenticated()
                 .and()
