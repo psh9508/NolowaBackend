@@ -26,17 +26,22 @@ public class SocialLoginController {
                 .grantType("authorization_code").build();
 
         var webClient = WebClient.create();
-        var tokenResponse = webClient.post().uri("https://oauth2.googleapis.com/token")
-                                                        .bodyValue(oAuthGoogleRequest)
-                                                        .retrieve()
-                                                        .bodyToMono(OAuthGoogleResponse.class)
-//                                                        .subscribe()
-                                                        .block();
+        webClient.post().uri("https://oauth2.googleapis.com/token")
+                        .bodyValue(oAuthGoogleRequest)
+                        .retrieve()
+                        .bodyToMono(OAuthGoogleResponse.class)
+                        .subscribe(x -> {
+                            String jwtToken = x.getIdToken();
+                            String requestUrl = UriComponentsBuilder.fromHttpUrl("https://oauth2.googleapis.com/tokeninfo")
+                                                                    .queryParam("id_token", jwtToken).toUriString();
 
-        String jwtToken = tokenResponse.getIdToken();
-        String requestUrl = UriComponentsBuilder.fromHttpUrl("https://oauth2.googleapis.com/tokeninfo")
-                                                .queryParam("id_token", jwtToken).toUriString();
-
-        var userInfoResponse = webClient.get().uri(requestUrl).retrieve().bodyToMono(GoogleUserInfo.class).block();
+                            var userInfoResponse = webClient.get().uri(requestUrl)
+                                                                        .retrieve()
+                                                                        .bodyToMono(GoogleUserInfo.class)
+                                                                        .subscribe(googleUserInfo ->{
+                                                                            String username = googleUserInfo.getName();
+                                                                            String email = googleUserInfo.getEmail();
+                                                                        });
+                        });
     }
 }
