@@ -1,5 +1,8 @@
 package com.example.Nolowa.Helpers;
 
+import com.example.Nolowa.Constant;
+import org.apache.el.parser.BooleanNode;
+
 import java.io.*;
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -7,8 +10,7 @@ import java.security.MessageDigest;
 
 public class FileHelper {
     public static Boolean downloadFileFromURL(String dest, String urlString) throws IOException {
-        URL url = new URL("http://djsajinkwan.com/wp-content/uploads/2015/06/%E1%84%8C%E1%85%B3%E1%86%BC%E1%84%86%E1%85%A7%E1%86%BC%E1%84%89%E1%85%A2%E1%86%B7%E1%84%91%E1%85%B3%E1%86%AF1.jpg");
-        //URL url = new URL(urlString);
+        URL url = new URL(urlString);
         InputStream in = new BufferedInputStream(url.openStream());
         ByteArrayOutputStream out = new ByteArrayOutputStream();
         byte[] buf = new byte[1024];
@@ -29,11 +31,20 @@ public class FileHelper {
     }
 
     public static String extractFileHashSHA256(String fileFullPath) throws Exception {
-
         String SHA = "";
+        String targetPath = fileFullPath;
+
         int buff = 16384;
         try {
-            RandomAccessFile file = new RandomAccessFile(fileFullPath, "r");
+            if(isExists(fileFullPath) == false) {
+                String tempDownloadPath = Constant.profileImageRootPath + "temp.jpg";
+
+                downloadFileFromURL(tempDownloadPath, fileFullPath);
+
+                targetPath = tempDownloadPath;
+            }
+
+            RandomAccessFile file = new RandomAccessFile(targetPath, "r");
 
             MessageDigest hashSum = MessageDigest.getInstance("SHA-256");
 
@@ -64,10 +75,28 @@ public class FileHelper {
             }
             SHA = sb.toString();
 
+            if(targetPath.contains(SHA) == false) {
+                rename(targetPath, Constant.profileImageRootPath + SHA + ".jpg");
+            }
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
 
         return SHA;
+    }
+
+    public static Boolean isExists(String filePath) {
+        var file = new File(filePath);
+
+        return file.exists();
+    }
+
+    public static Boolean rename(String dest, String source) {
+        var file = new File(dest);
+
+        if(file.exists() == false)
+            return false;
+
+        return file.renameTo(new File(source));
     }
 }
