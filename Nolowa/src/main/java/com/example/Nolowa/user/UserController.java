@@ -1,8 +1,9 @@
 package com.example.Nolowa.user;
 
-import com.example.Nolowa.authentication.AuthenticationService;
 import com.example.Nolowa.dataModels.User;
+import com.example.Nolowa.dataModels.UserDTO;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -17,7 +18,7 @@ public class UserController {
     }
 
     @PostMapping("/Save")
-    public User Save(User user) throws Exception {
+    public User Save(@RequestBody UserDTO user) throws Exception {
         // 1. 같은 유저가 있는지 확인
         var hasSameUser = userService.getUser(user.getEmail());
 
@@ -27,6 +28,6 @@ public class UserController {
         }
 
         // 2. 없으면 회원가입 후 가입된 유저 반환
-        return userService.Save(user);
+        return userService.Save(user.ToEntity());
     }
 }

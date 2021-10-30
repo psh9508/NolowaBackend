@@ -42,7 +42,7 @@ public class AuthenticationController {
 
     @GetMapping("/GetSubject")
     public String GetSubjectFromJWT(@RequestParam("token") String token) {
-        var subject = jwtTokenProvider.extractUsername(token);
+        String subject = jwtTokenProvider.extractUsername(token);
 
         return subject;
     }
@@ -60,19 +60,5 @@ public class AuthenticationController {
         account.setJwtToken(jwtTokenProvider.generateToken(account.getEmail()));
         
         return account;
-    }
-
-    @PostMapping("/Save")
-    public User Save(User user) throws Exception {
-        // 1. 같은 유저가 있는지 확인
-        var hasSameUser = authenticationService.HasSameUser(user.getEmail());
-
-        //    -> 있으면 exception
-        if(hasSameUser) {
-            throw new Exception("같은 유저 있음");
-        }
-
-        // 2. 없으면 회원가입 후 가입된 유저 반환
-        return authenticationService.Save(user);
     }
 }

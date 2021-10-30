@@ -16,8 +16,10 @@ import java.util.List;
 @Getter
 @Setter
 @Entity
-@NoArgsConstructor
 @EntityListeners(AuditingEntityListener.class)
+@AllArgsConstructor
+@NoArgsConstructor
+@Builder
 public class User {
 
     @Id @GeneratedValue

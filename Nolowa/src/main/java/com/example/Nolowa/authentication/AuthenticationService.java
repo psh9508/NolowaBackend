@@ -4,6 +4,7 @@ import com.example.Nolowa.Constant;
 import com.example.Nolowa.Helpers.FileHelper;
 import com.example.Nolowa.Helpers.LocalImageFileHelper;
 import com.example.Nolowa.dataModels.User;
+import com.example.Nolowa.user.UserRepository;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
@@ -16,34 +17,15 @@ import java.util.Optional;
 
 @Service
 public class AuthenticationService {
+    private final UserRepository userRepository;
 
-    private final AuthenticationRepository repository;
-
-    public AuthenticationService(AuthenticationRepository repository) {
-        this.repository = repository;
-    }
-
-    public User getUser(Long id) {
-        var user = repository.getById(id);
-
-        return user;
+    public AuthenticationService(UserRepository userRepository) {
+        this.userRepository = userRepository;
     }
 
     public User login(String email, String password) {
-        var user = repository.findByEmailAndPassword(email, password);
+        var user = userRepository.findByEmailAndPassword(email, password);
 
         return user.orElseThrow(() -> new UsernameNotFoundException(email));
-    }
-
-    public User Save(@NotNull User user) {
-        var savedUser = repository.save(user);
-
-        return savedUser;
-    }
-
-    public Boolean HasSameUser(@NotNull String email) {
-        var user = repository.findByEmail(email);
-
-        return user.isPresent();
     }
 }
