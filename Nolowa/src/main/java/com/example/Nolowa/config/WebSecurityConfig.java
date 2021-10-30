@@ -11,6 +11,7 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.NoOpPasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
@@ -36,15 +37,15 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                             , "/h2-console/**").permitAll()
                 .anyRequest().authenticated()
                 .and()
-                .csrf().disable();
+                .csrf().disable().headers().frameOptions().disable();
 
         http.addFilterAfter(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class);
     }
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-        auth.userDetailsService(accountService).passwordEncoder(NoOpPasswordEncoder.getInstance());
-//        auth.userDetailsService(accountService).passwordEncoder(new BCryptPasswordEncoder());
+//        auth.userDetailsService(accountService).passwordEncoder(NoOpPasswordEncoder.getInstance());
+        auth.userDetailsService(accountService).passwordEncoder(new BCryptPasswordEncoder());
     }
 
     @Bean
