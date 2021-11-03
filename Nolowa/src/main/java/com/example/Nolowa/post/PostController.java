@@ -2,6 +2,7 @@ package com.example.Nolowa.post;
 
 import com.example.Nolowa.authentication.AuthenticationService;
 import com.example.Nolowa.dataModels.Post;
+import com.example.Nolowa.dataModels.PostDTO;
 import com.example.Nolowa.user.UserService;
 import org.springframework.web.bind.annotation.*;
 
@@ -36,8 +37,8 @@ public class PostController {
     }
 
     @PostMapping("/New")
-    public Post save(@RequestBody Post post) {
-        var uploadedPost = postService.save(post);
+    public Post save(@RequestBody PostDTO post) {
+        var uploadedPost = postService.save(post.toEntity());
 
         return uploadedPost;
     }

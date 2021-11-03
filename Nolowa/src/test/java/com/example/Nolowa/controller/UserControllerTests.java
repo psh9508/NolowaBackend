@@ -5,6 +5,7 @@ import com.example.Nolowa.authentication.AuthenticationService;
 import com.example.Nolowa.dataModels.Images.ProfileImage;
 import com.example.Nolowa.dataModels.Post;
 import com.example.Nolowa.dataModels.User;
+import com.example.Nolowa.jwt.JwtTokenProvider;
 import com.example.Nolowa.user.UserRepository;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import net.minidev.json.parser.ParseException;
@@ -60,16 +61,23 @@ public class UserControllerTests {
 
     @Test
     public void Mock을이용한테스트작성() {
-        var mockService = mock(AuthenticationService.class);
+        var mockAuthService = mock(AuthenticationService.class);
+        var mockJwtTokenProvider = mock(JwtTokenProvider.class);
 
-        var controller = new AuthenticationController(mockService, null);
+        var controller = new AuthenticationController(mockAuthService, mockJwtTokenProvider);
 
         var mockUser = new User();
         mockUser.setEmail("TestUser");
         mockUser.setPassword("TestPassword");
-        mockUser.setProfileImage(new ProfileImage("http://mockUrl", "hash"));
 
-        when(mockService.login("TestUser", "TestPassword")).thenReturn(mockUser);
+        var profileImage = new ProfileImage();
+        profileImage.setUrl("http://mockUrl.com");
+        profileImage.setHash("hash");
+
+        mockUser.setProfileImage(profileImage);
+
+        when(mockAuthService.login("TestUser", "TestPassword")).thenReturn(mockUser);
+        when(mockJwtTokenProvider.generateToken("TestUser")).thenReturn("mockJWT");
 
         try {
             Map<String, String> param = new HashMap<String, String>() {

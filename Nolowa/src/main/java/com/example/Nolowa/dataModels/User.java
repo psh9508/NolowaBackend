@@ -50,7 +50,7 @@ public class User {
 
     public void setProfileImage(String profileImageURI) {
         var profileImage = new ProfileImage();
-        profileImage.setUrl(profileImageURI);
+        profileImage.setUrlAndHash(profileImageURI);
 
         this.profileImage = profileImage;
     }

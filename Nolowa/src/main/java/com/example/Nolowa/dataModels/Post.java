@@ -11,7 +11,10 @@ import java.time.LocalDateTime;
 
 @Entity
 @Getter
+@Builder
 @EntityListeners(AuditingEntityListener.class)
+@NoArgsConstructor
+@AllArgsConstructor
 public class Post {
 
     @Id @GeneratedValue

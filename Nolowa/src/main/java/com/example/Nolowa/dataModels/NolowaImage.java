@@ -6,6 +6,8 @@ import lombok.*;
 import javax.persistence.*;
 
 @MappedSuperclass
+@Getter
+@Setter
 public class NolowaImage {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -13,7 +15,7 @@ public class NolowaImage {
     private String url;
     private String hash;
 
-    public void setUrl(String url) {
+    public void setUrlAndHash(String url) {
         this.url = url;
 
         try {
@@ -21,9 +23,5 @@ public class NolowaImage {
         } catch (Exception ex) {
             this.hash = "";
         }
-    }
-
-    public void setId(Long id) {
-        this.id = id;
     }
 }
