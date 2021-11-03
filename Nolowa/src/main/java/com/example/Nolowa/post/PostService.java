@@ -1,6 +1,8 @@
 package com.example.Nolowa.post;
 
+import com.example.Nolowa.dataModels.Images.ProfileImage;
 import com.example.Nolowa.dataModels.Post;
+import com.example.Nolowa.dataModels.PostDTO;
 import com.example.Nolowa.dataModels.User;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.stereotype.Service;
@@ -40,6 +42,16 @@ public class PostService {
 
     private List<Post> getFollowerPosts(List<Long> followerIds) {
         var followerPosts = repository.findAllByPostedUserIds(followerIds);
+
+//        followerPosts.stream().filter(x -> x.getPostedUser().getProfileImage() == null).forEach(x -> {
+//            String defaultProfileImageName = "ProfilePicture";
+//
+//            var profileImage = new ProfileImage();
+//            profileImage.setHash(defaultProfileImageName);
+//
+//            x.getPostedUser().setProfileImage(profileImage);
+//        });
+
         followerPosts.sort(Comparator.comparing(Post::getUploadedDateTime, Comparator.reverseOrder()));
 
         return followerPosts;
