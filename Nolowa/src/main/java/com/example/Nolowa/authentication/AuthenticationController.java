@@ -1,6 +1,7 @@
 package com.example.Nolowa.authentication;
 
 import com.example.Nolowa.account.AccountService;
+import com.example.Nolowa.dataModels.Images.ProfileImage;
 import com.example.Nolowa.dataModels.User;
 import com.example.Nolowa.dataModels.oauth.google.OAuthGoogleRequest;
 import com.example.Nolowa.dataModels.oauth.google.OAuthGoogleResponse;
@@ -56,6 +57,14 @@ public class AuthenticationController {
 
         if(account == null)
             return null;
+
+        if(account.getProfileImage() == null)
+        {
+            var profileImage = new ProfileImage();
+            profileImage.setDefaultProfileImage();
+
+            account.setProfileImage(profileImage);
+        }
 
         account.setJwtToken(jwtTokenProvider.generateToken(account.getEmail()));
         

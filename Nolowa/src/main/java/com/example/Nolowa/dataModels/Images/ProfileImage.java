@@ -11,5 +11,7 @@ import javax.persistence.*;
 @Entity
 @NoArgsConstructor
 public class ProfileImage extends NolowaImage {
-
+    public void setDefaultProfileImage() {
+        hash = "ProfilePicture";
+    }
 }

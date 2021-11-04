@@ -43,14 +43,12 @@ public class PostService {
     private List<Post> getFollowerPosts(List<Long> followerIds) {
         var followerPosts = repository.findAllByPostedUserIds(followerIds);
 
-//        followerPosts.stream().filter(x -> x.getPostedUser().getProfileImage() == null).forEach(x -> {
-//            String defaultProfileImageName = "ProfilePicture";
-//
-//            var profileImage = new ProfileImage();
-//            profileImage.setHash(defaultProfileImageName);
-//
-//            x.getPostedUser().setProfileImage(profileImage);
-//        });
+        followerPosts.stream().filter(x -> x.getPostedUser().getProfileImage() == null).forEach(x -> {
+            var profileImage = new ProfileImage();
+            profileImage.setDefaultProfileImage();
+
+            x.getPostedUser().setProfileImage(profileImage);
+        });
 
         followerPosts.sort(Comparator.comparing(Post::getUploadedDateTime, Comparator.reverseOrder()));
 

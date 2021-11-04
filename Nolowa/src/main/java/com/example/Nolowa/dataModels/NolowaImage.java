@@ -13,7 +13,7 @@ public class NolowaImage {
     private Long id;
     @Lob
     private String url;
-    private String hash;
+    protected String hash;
 
     public void setUrlAndHash(String url) {
         this.url = url;
