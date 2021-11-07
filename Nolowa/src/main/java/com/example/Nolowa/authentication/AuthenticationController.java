@@ -1,5 +1,6 @@
 package com.example.Nolowa.authentication;
 
+import com.example.Nolowa.Helpers.ProfileImageHelper;
 import com.example.Nolowa.account.AccountService;
 import com.example.Nolowa.dataModels.Images.ProfileImage;
 import com.example.Nolowa.dataModels.User;
@@ -58,13 +59,7 @@ public class AuthenticationController {
         if(account == null)
             return null;
 
-        if(account.getProfileImage() == null)
-        {
-            var profileImage = new ProfileImage();
-            profileImage.setDefaultProfileImage();
-
-            account.setProfileImage(profileImage);
-        }
+        ProfileImageHelper.setDefaultProfileFile(account);
 
         account.setJwtToken(jwtTokenProvider.generateToken(account.getEmail()));
         
