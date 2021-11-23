@@ -5,6 +5,7 @@ import com.example.Nolowa.dataModels.PostDTO;
 import com.example.Nolowa.dataModels.SearchHistory;
 import com.example.Nolowa.dataModels.User;
 import com.example.Nolowa.user.UserRepository;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -46,7 +47,17 @@ public class SearchService {
     @Transactional
     public List<PostDTO> search(Long userIdWhoSearches, String keyword) {
         // User 객체 찾음
-        var loginUser = userRepository.findById(userIdWhoSearches).get();
+        var maybeLoginUser = userRepository.findById(userIdWhoSearches);
+
+        if(maybeLoginUser.isPresent() == false)
+            throw new UsernameNotFoundException("사용중인 User가 없습니다.");
+
+        var loginUser = maybeLoginUser.get();
+
+        // DB에 같은 검색어 있으면 지운다
+        var searchResult = searchRepository.findBySearchUserAndKeyword(loginUser, keyword);
+
+        searchResult.ifPresent(searchRepository::delete);
 
         // DB에 검색어 저장
         searchRepository.save(SearchHistory.builder()
