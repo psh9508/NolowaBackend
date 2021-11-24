@@ -20,6 +20,7 @@ public interface SearchRepository extends JpaRepository<SearchHistory, Long> {
 
     Optional<SearchHistory> findBySearchUserAndKeyword(User user, String keyword);
 
+    void deleteAllBySearchUser(User user);
 //    ArrayList<String> findAllKeywordTop5BySearchUserOrderByUploadedDateTimeDesc(User user);
 //    void save(User user, String keyword);
 }

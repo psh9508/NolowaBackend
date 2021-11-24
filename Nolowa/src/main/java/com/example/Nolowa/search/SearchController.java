@@ -29,17 +29,22 @@ public class SearchController {
         return null;
     }
 
-    @GetMapping("User/{username}")
+    @GetMapping("/User/{username}")
     public List<User> searchUser(@PathVariable String username) {
         var searchedUserList = service.searchUser(username);
 
         return searchedUserList;
     }
 
-    @GetMapping("Keywords/{userId}")
+    @GetMapping("/Keywords/{userId}")
     public List<String> getSearchedKeywords(@PathVariable String userId) {
         var searchedKeywords = service.getSearchedKeywords(Long.parseLong(userId));
 
         return searchedKeywords;
+    }
+
+    @DeleteMapping("DeleteAll/{userId}")
+    public void deleteKeyword(@PathVariable String userId) {
+        service.deleteKeyword(userId);
     }
 }
