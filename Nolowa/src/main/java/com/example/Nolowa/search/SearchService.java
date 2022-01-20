@@ -46,7 +46,6 @@ public class SearchService {
 
     @Transactional
     public List<PostDTO> search(Long userIdWhoSearches, String keyword) {
-        // User 객체 찾음
         var maybeLoginUser = userRepository.findById(userIdWhoSearches);
 
         if(maybeLoginUser.isPresent() == false)
@@ -56,7 +55,6 @@ public class SearchService {
 
         // DB에 같은 검색어 있으면 지운다
         var searchResult = searchRepository.findBySearchUserAndKeyword(loginUser, keyword);
-
         searchResult.ifPresent(searchRepository::delete);
 
         // DB에 검색어 저장
@@ -79,5 +77,15 @@ public class SearchService {
         }
 
         return searchedUserList;
+    }
+
+    @Transactional
+    public void deleteKeyword(String userId) {
+        var maybeLoginUser = userRepository.findById(Long.parseLong(userId));
+
+        if(maybeLoginUser.isPresent() == false)
+            throw new UsernameNotFoundException("사용중인 User가 없습니다.");
+
+        searchRepository.deleteAllBySearchUser(maybeLoginUser.get());
     }
 }
