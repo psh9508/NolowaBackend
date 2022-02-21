@@ -30,4 +30,9 @@ public class UserController {
         // 2. 없으면 회원가입 후 가입된 유저 반환
         return userService.Save(user.ToEntity());
     }
+
+    @PostMapping("/Follow/{userId}/{followUserId}")
+    public boolean Follow(long userId, long followUserId) {
+        return true;
+    }
 }
