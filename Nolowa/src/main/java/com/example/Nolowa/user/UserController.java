@@ -1,20 +1,20 @@
 package com.example.Nolowa.user;
 
+import com.example.Nolowa.dataModels.Follower;
 import com.example.Nolowa.dataModels.User;
 import com.example.Nolowa.dataModels.UserDTO;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/User")
 public class UserController {
 
     private final UserService userService;
+    private final FollowerRepository followerRepository;
 
-    public UserController(UserService userService) {
+    public UserController(UserService userService, FollowerRepository followerRepository) {
         this.userService = userService;
+        this.followerRepository = followerRepository;
     }
 
     @PostMapping("/Save")
@@ -32,7 +32,11 @@ public class UserController {
     }
 
     @PostMapping("/Follow/{userId}/{followUserId}")
-    public boolean Follow(long userId, long followUserId) {
-        return true;
+    public void Follow(@PathVariable long userId, @PathVariable long followUserId) {
+        Follower newFollower = new Follower();
+        newFollower.setUser(userService.getUser(userId));
+        newFollower.setFollowerUser(userService.getUser(followUserId));
+
+        followerRepository.save(newFollower);
     }
 }
