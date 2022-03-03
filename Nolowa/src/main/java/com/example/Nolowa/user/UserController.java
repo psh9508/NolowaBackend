@@ -31,12 +31,14 @@ public class UserController {
         return userService.Save(user.ToEntity());
     }
 
-    @PostMapping("/Follow/{userId}/{followUserId}")
-    public void Follow(@PathVariable long userId, @PathVariable long followUserId) {
+    @PostMapping("/Follow/{followerUserId}/{followeeUserId}")
+    public boolean Follow(@PathVariable long followerUserId, @PathVariable long followeeUserId) {
         Follower newFollower = new Follower();
-        newFollower.setUser(userService.getUser(userId));
-        newFollower.setFollowerUser(userService.getUser(followUserId));
+        newFollower.setUser(userService.getUser(followerUserId));
+        newFollower.setFollowerUser(userService.getUser(followeeUserId));
 
-        followerRepository.save(newFollower);
+        var response = followerRepository.save(newFollower);
+
+        return response != null;
     }
 }
